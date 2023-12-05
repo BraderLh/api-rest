@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonaServiceImpl implements PersonaService {
@@ -31,10 +30,10 @@ public class PersonaServiceImpl implements PersonaService {
     public Persona actualizarPersona(Persona persona) {
         Persona personaActualizar = personaDAO.getReferenceById(persona.getId());
             if (personaDAO.existsById(personaActualizar.getId())) {
-                personaActualizar.setNombre(persona.getNombre().isEmpty() ? personaActualizar.getNombre() : persona.getNombre());
-                personaActualizar.setApellidos(persona.getApellidos().isEmpty() ? personaActualizar.getApellidos() : persona.getApellidos());
-                personaActualizar.setEmail(persona.getEmail().isEmpty() ? personaActualizar.getEmail() : persona.getEmail());
-                personaActualizar.setTelefono(persona.getTelefono().isEmpty() ? personaActualizar.getTelefono() : persona.getTelefono());
+                personaActualizar.setNombre(persona.getNombre() == null || persona.getNombre().isEmpty() ? personaActualizar.getNombre() : persona.getNombre());
+                personaActualizar.setApellidos(persona.getApellidos() == null || persona.getApellidos().isEmpty() ? personaActualizar.getApellidos() : persona.getApellidos());
+                personaActualizar.setEmail(persona.getEmail() == null || persona.getEmail().isEmpty() ? personaActualizar.getEmail() : persona.getEmail());
+                personaActualizar.setTelefono(persona.getTelefono() == null || persona.getTelefono().isEmpty() ? personaActualizar.getTelefono() : persona.getTelefono());
                 personaActualizar.setEdad(persona.getEdad() == 0 ? personaActualizar.getEdad() : persona.getEdad());
                 personaActualizar.setEstado(persona.getEstado() == 0 ? personaActualizar.getEstado() : persona.getEstado());
                 personaActualizar = personaDAO.save(personaActualizar);
@@ -44,5 +43,5 @@ public class PersonaServiceImpl implements PersonaService {
             }
         return personaActualizar;
     }
-    public List<Persona> listarPersona() { return personaDAO.findAll();};
+    public List<Persona> listarPersona() { return personaDAO.findAll();}
 }
